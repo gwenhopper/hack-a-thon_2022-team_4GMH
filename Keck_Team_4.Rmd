@@ -32,6 +32,8 @@ library(tidyverse)
 library(sf)
 
 imp = read.csv("data/2018303d_final.csv") #read impaired waters data set 
+names(imp) <-  c("PRIORITY.RANK", colnames(imp)[2:8], "CAUSE")
+
 imp = imp %>%
   filter(PRIORITY.RANK != "")
 
