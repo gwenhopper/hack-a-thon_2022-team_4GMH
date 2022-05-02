@@ -17,7 +17,7 @@ dim(imp) # 1979-861 = 1118 rows
 
 summary(imp)
 names(imp) <-  c("priorityRank", "note", "basin", "huc_12", "county", "description", "station", "use", "cause")
-summary(imp)      
+ summary(imp)      
 
 unique(imp$cause)
 
@@ -28,16 +28,43 @@ ggplot(data = imp)+
 unique(imp$cause) 
 
 
-<- strsplit(imp$cause)= ',')
-names(splitdat) = paste("trial", 1:4, sep = "")
-
-
-#Normalize the area or number of water bodies per basin 
-
-
-
-test <- separate(imp,cause,
+# Seperating the causes 
+imp_cause<- separate(imp,cause,
   into=c("cause1","cause2", "cause3", "cause4"),
   sep = ",")
 
-head(test)
+tail(imp_cause, n=20)
+
+imp_cause$totalCause <- 0
+
+for(i in seq(dim(imp_cause)[1])){
+  if(is.na(imp_cause$cause4)[i] == FALSE){
+    imp_cause$totalCause[i] = 4
+  }else if(is.na(imp_cause$cause3)[i] == FALSE){
+        imp_cause$totalCause[i] = 3
+    }else if(is.na(imp_cause$cause2)[i] == FALSE){
+      imp_cause$totalCause[i] = 2
+    }else if(is.na(imp_cause$cause1)[i] == FALSE){
+      imp_cause$totalCause[i] = 1
+    }
+}
+
+
+
+ggplot(data = imp_cause)+
+  geom_histogram(aes(x=totalCause, fill=priorityRank), stat="count", binwidth =5 )+
+  coord_flip()
+#most only have 1, but the combo of all the different lists really clog up the image 
+
+
+ggplot(data = imp_cause)+
+  geom_histogram(aes(x=totalCause, fill=basin), stat="count", binwidth =5 )+
+  coord_flip()
+#seems distributed among the basins
+
+
+#how to do a count of all 
+
+table(imp_cause[,c("cause1", "cause2", "cause3", "cause4")])
+
+table(imp_cause$cause1) + table(imp_cause$cause2) + table(imp_cause$cause3) + table(imp_cause$cause4)
