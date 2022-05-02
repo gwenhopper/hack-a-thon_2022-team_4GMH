@@ -129,3 +129,15 @@ ggplot()+
 
 ggplot(data = cause2_df)+
   geom_tile(aes(x=cause2, y=cause1))
+
+
+
+#maggie cause 
+imp = read_csv("data/2018303d_final.csv") # SC Impaired Waters List 303d for 2018
+names(imp) <- c("prank","note","basin","huc12","county","desc","station","use","cause")
+# generating new rows to deal with multiple causes - for Abby
+imp_new = imp %>%
+  filter(prank != "") %>%
+  #separate(cause, c("cause1", "cause2", "cause3","cause4","cause5"))
+  separate_rows(cause, prank, cause, convert = TRUE)
+dim(imp_new)
