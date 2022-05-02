@@ -1,0 +1,42 @@
+---
+title: "Group 4 Hackathon"
+author: "Abigail Kreuser"
+date: '2022-05-02'
+output: html_document
+---
+# SPELL CHECK THIS
+## change authors  
+
+Intro:
+Our group found that the priority ranking was a vauge indicator of the differences among the impaired water bodies. We looked for realationships between priotity ranking and basin, cause, and use. We further investigate the causes of water body impairment in the 2018 data to disseminate trends. 
+
+### Priority ranks
+
+The priority ranks are defined as:
+
+
+1 = __Current Priorities__ are those site/pollutant combinations being addressed by TMDL or
+alternative restoration plans being developed during the 2016-2018 time-frame.
+
+
+2 = __Near-Term Priorities__ are those site/pollutant combinations being addressed by TMDL or
+alternative restoration plans being developed during the 2019-2022 time-frame.
+
+
+3 = __Long-Term Priorities__ are those site/pollutant combinations being addressed by TMDL or
+alternative restoration plans being developed after 2022.
+
+## Basin and priority rank:
+impaired vs non imparied 
+Gwen script- maybe make a map, run a t-test, 
+
+Maggie making histogram now
+
+
+
+
+### Priority rank and use
+
+
+Basins: 
+

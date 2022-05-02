@@ -3,7 +3,6 @@
 #303D_18 is a shapefile- which are imparied ve meeting standards
 #the other folder is a shape file, biological information , more detail 
 library(tidyverse)
-library(tidyverse)
 
 #looking at impaired waters 
 imp = read_csv("data/2018303d_final.csv") # SC Impaired Waters List 303d for 2018
@@ -62,6 +61,7 @@ ggplot(data = imp_cause)+
   coord_flip()
 #seems distributed among the basins
 
+table(imp_cause$totalCause, imp_cause$basin)
 
 #how to do a count of all 
 
@@ -123,9 +123,30 @@ library(viridis)
 
 #install.packages('viridis')
 ggplot()+
-  geom_tile(data=heatmap_cause, aes(x=cause2, y=cause1, fill=n))
+  geom_tile(data=heatmap_cause, aes(x=cause2, y=cause1, fill=n),
+            color="white",
+            lwd =1.5,
+            linetype=1)+
+  theme_classic()+
+  coord_fixed()+
+  labs(fill="count", )+
+  theme(axis.text.x= element_text(angle = 90, vjust=0.5, hjust=1))+
+  scale_fill_viridis(option="rocket", begin=0.1)
+  
  
 
 
 ggplot(data = cause2_df)+
   geom_tile(aes(x=cause2, y=cause1))
+
+
+
+#maggie cause 
+imp = read_csv("data/2018303d_final.csv") # SC Impaired Waters List 303d for 2018
+names(imp) <- c("prank","note","basin","huc12","county","desc","station","use","cause")
+# generating new rows to deal with multiple causes - for Abby
+imp_new = imp %>%
+  filter(prank != "") %>%
+  #separate(cause, c("cause1", "cause2", "cause3","cause4","cause5"))
+  separate_rows(cause, prank, cause, convert = TRUE)
+dim(imp_new)
