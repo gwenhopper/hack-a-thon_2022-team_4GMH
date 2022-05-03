@@ -16,42 +16,42 @@ shp_imp
 # Larger shapefile of ALL stations (including shellfish monitoring sites, macroinvertebrate sites, much more than the ambient water quality sites used for the 303d list)
 # Provided by Wade Cantrell at SC DHEC on 2022-04-11
 shp_all = st_read("data/bw.SDE.STATIONS", "bw.SDE.STATIONS")
-
+head(shp_all)
+plot(shp_all)
 # SC 2018 303d list: https://scdhec.gov/bow/south-carolina-303d-list-impaired-waters-tmdls
 # Converted 303d list from .xls to .csv before reading in
-imp = read.csv("data/2018303d_final.csv") # SC Impaired Waters List 303d for 2018
+imp = read_csv("data/2018303d_final.csv") # SC Impaired Waters List 303d for 2018
 summary(imp) # There are 861 empty rows
 
 # Get rid of empty rows
 dim(imp) #1979 rows
 imp = imp %>%
-  filter(priority_rank != "") 
+  filter(PRIORITY.RANK != "") 
 dim(imp) # 1979-861 = 1118 rows
 
 # Plot locations of impaired waters and stations that are not on the list (either bc they meet water quality standards or have a TMDL)
 # TMDL = Total Maximum Daily Load - indicates site where approved pollutant limits have been identified and waters are being managed to meet these TMDL
 ggplot() +
-  geom_sf(data=shp_imp, aes(color=STATUS))
+  geom_sf(data=imp, aes(color=STATUS))
 
 # Plot boundaries of 8 major river basins in SC
 ggplot() +
-  geom_sf(data=basin, aes(fill=basin))
+  geom_sf(data=basin, aes(fill=Basin))
 
+#shp_imp has a lot of cool data look into more
 summary(shp_imp)
 table(shp_imp$IMPAIRMENT)
-table(shp_imp$STATUS, shp_imp$BASIN)
+table(shp_imp$STAT)
 
-(79/(79+117))*100
+head(shp_imp$STATUS)
 
-BROAD_IMPAIRED=(79/(79+117))*100
-CATAWBA_IMPAIRED=(104/(32+104))*100
-EDISTO_IMPAIRED=(95/(95+95))*100
-PEEDEE_IMPAIRED=(229/(229+170))*100
-SALKEHATCHIE_IMPAIRED=(128/(128+171))*100
-SALUDA_IMPAIRED=(121/(121+76))*100
-SANTEE_IMPAIRED=(171/(171+260))*100
-SAVANNAH_IMPAIRED=(113/(113+177))*100
+total_bodies<- table(shp_imp$STATUS, shp_imp$BASIN)
 
 
+head(total_bodies)
+total_bodies<- data.frame(total_bodies)
+
+total_bodies <- total_bodies %>%
+  pivot_wider( c("IMPAIRED", "NOT ON LIST"))
 
 
