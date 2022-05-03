@@ -43,6 +43,7 @@ table(shp_imp$STATUS, shp_imp$BASIN)
 
 (79/(79+117))*100
 
+
 BROAD_IMPAIRED=(79/(79+117))*100
 CATAWBA_IMPAIRED=(104/(32+104))*100
 EDISTO_IMPAIRED=(95/(95+95))*100
@@ -54,4 +55,13 @@ SAVANNAH_IMPAIRED=(113/(113+177))*100
 
 
 
+basin_percent_imp<- rbind(BROAD_IMPAIRED, CATAWBA_IMPAIRED, EDISTO_IMPAIRED, PEEDEE_IMPAIRED, SALKEHATCHIE_IMPAIRED,SALUDA_IMPAIRED,SAVANNAH_IMPAIRED)
+  
+basin_percent_imp <- as.data.frame.matrix(basin_percent_imp)
 
+basin_percent_imp$V1 <- round(basin_percent_imp$V1, 0)
+
+names(basin_percent_imp) <- "percent"
+
+
+t.test(basin_percent_imp)
